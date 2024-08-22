@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from './CartSlice';
+import { addItem, removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
+import { isAction } from '@reduxjs/toolkit';
 
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
@@ -9,6 +10,10 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
+    let total = 0;
+    cart.forEach((item) => {
+        total += item.quantity * item.cost; 
+    });
  
   };
 
@@ -16,21 +21,68 @@ const CartItem = ({ onContinueShopping }) => {
    
   };
 
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference');
+  };
+
 
 
   const handleIncrement = (item) => {
+    dispatch(updateQuantity(item));
+    item.quantity++;
   };
 
   const handleDecrement = (item) => {
-   
-  };
+    dispatch(updateQuantity(item));
+    const {name} = action.payload;
+    const itemToUpdate = state.items.find(item => item.name === name);
+    if (itemToUpdate){
+        if (itemToUpdate.quantity == 1){
+            handleRemove(item)
+        } else if (itemToUpdate.quantity > 1){
+            itemToUpdate.quantity--;
+        }
+
+    };
+    
+   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item));
   };
 
   // Calculate total cost based on quantity for an item
-  const calculateTotalCost = (item) => {
-  };
+const calculateTotalCost = (item) => {
+    let totalCost = 0;
+        if (category === "Air Purifying Plants") {
+          cart.forEach((item) => {
+            totalCost += item.cost * item.quantity;
+        });
+    } else if (category === "Aromatic Fragrant Plants" ) {
+        cart.forEach((item) => {
+            totalCost += item.cost * item.quantity;
+        });
+    } else if (category === "Insect Repellent Plants") {
+        cart.forEach((item) => {
+            totalCost += item.cost * item.quantity;
+        });
+    } else if (category === "Medicinal Plants") {
+        cart.forEach((item) => {
+            totalCost += item.cost * item.quantity;
+        });
+    } else if (category === "Low Maintenance Plants" ) {
+        cart.forEach((item) => {
+            totalCost += item.cost * item.quantity;
+        });
+    }
+    return totalCost;
+    };
+
+
+    
+
+
+       
 
   return (
     <div className="cart-container">
