@@ -29,11 +29,13 @@ const CartItem = ({ onContinueShopping }) => {
 
   const handleDecrement = (item) => {
     const itemToDecrement = cart.items.find(item=> item.name ===name);
-    if (itemToDecrement && itemToDecrement.quantity >0 ){
+    if (itemToDecrement && itemToDecrement.quantity >1 ){
         itemToDecrement.quantity--;
+        dispatch(updateQuantity(item));
+    } else if (itemToDecrement.quantity == 1){
+        dispatch(removeItem(item));
     }
-    dispatch(updateQuantity(item));
-   
+      
   };
 
   const handleRemove = (item) => {
@@ -42,7 +44,13 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    const cartItemType = cart.items.find(item => item.category == category);
+    return cartItemType.quantity * cartItemType.cost;
   };
+
+  const totalQuantity = (item) =>{
+    return cart.items.quantity;
+  }
 
   return (
     <div className="cart-container">
