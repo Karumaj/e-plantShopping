@@ -251,6 +251,13 @@ const handlePlantsClick = (e) => {
   };
 
     const handleAddToCart = (product) =>{
+        let found = false;
+    for (let item in cart){
+        if(cart[item].name === product.name){
+            found = true;
+        }
+    }
+    if(!found){
         dispatch(addItem(product));
         setAddedToCart((prevState) =>(
             {
@@ -259,7 +266,14 @@ const handlePlantsClick = (e) => {
             }
         ));
     };
-
+};
+    const productQuantity = () => {
+        let quantity = 0;
+        for (let item in cart) {
+            quantity += cart[item].quantity;
+        }
+        return quantity;
+};
     return (
         <div>
              <div className="navbar" style={styleObj}>
