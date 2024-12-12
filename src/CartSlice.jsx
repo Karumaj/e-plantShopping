@@ -6,7 +6,7 @@ export const CartSlice = createSlice({
     items: [], // Initialize items as an empty array
   },
   reducers: {
-    addItem: (state, action) => {
+    addItem:  (state, action) => {
         const {name, image, cost} = action.payload;
         const existingItem = state.items.find(item => item.name === name);
         if (existingItem){
